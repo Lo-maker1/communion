@@ -41,12 +41,37 @@
             document.body.innerHTML = "<div class='login-container'><h1>Accès Refusé</h1><p>Cette invitation est strictement personnelle.</p></div>";
         }
 
+        // --- AMBIANCE FESTIVE : Générateur de confettis en arrière-plan ---
+        function creerConfettis(nombre = 40) {
+            const couleurs = ['#e11d48', '#06b6d4', '#eab308', '#4cd137', '#9c88ff', '#ff9f43', '#ec4899'];
+            for (let i = 0; i < nombre; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = Math.random() * 10 + 6 + 'px';
+                confetti.style.height = Math.random() * 10 + 6 + 'px';
+                confetti.style.backgroundColor = couleurs[Math.floor(Math.random() * couleurs.length)];
+                confetti.style.top = Math.random() * 100 + 'vh';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+                confetti.style.opacity = '0.7';
+                confetti.style.zIndex = '-1';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.transform = `scale(${Math.random() * 1.2}) rotate(${Math.random() * 360}deg)`;
+                confetti.style.transition = 'all 1s ease-out';
+                confetti.classList.add('party-confetti');
+                document.body.appendChild(confetti);
+            }
+        }
+        
+        // Lance la pluie festive discrète dès le début
+        creerConfettis(45);
+
         // 1. INTERACTIVITÉ : Quand on clique sur un mannequin
         function declencherAction(genre) {
             const icon = document.getElementById(`${genre}Icon`);
             const bubble = document.getElementById(`${genre}Bubble`);
             
-            // On ajoute la classe d'animation spéciale (tourbillon/spin)
+            // Ajoute la super animation festive (breakdance / spin) défini dans le CSS survolté
             icon.classList.add('animation-clic');
             
             // Changement de texte de la bulle
@@ -62,7 +87,7 @@
             setTimeout(() => {
                 icon.classList.remove('animation-clic');
                 bubble.style.opacity = "0";
-            }, 1500);
+            }, 1200);
         }
 
         // 2. INTERACTIVITÉ : Quand l'invité commence à taper son nom
@@ -74,9 +99,9 @@
             const girlBubble = document.getElementById('girlBubble');
 
             if (nameInput.length > 0) {
-                // Les mannequins s'ambiancent et se rapprochent au fur et à mesure de la saisie !
-                boyWrapper.style.transform = `translateX(15px) scale(1.1)`;
-                girlWrapper.style.transform = `translateX(-15px) scale(1.1)`;
+                // Les mannequins s'ambiancent en s'approchant au fur et à mesure de la saisie !
+                boyWrapper.style.transform = `translateX(20px) scale(1.15)`;
+                girlWrapper.style.transform = `translateX(-20px) scale(1.15)`;
                 
                 boyBubble.innerText = "C'est toi ? 😍";
                 girlBubble.innerText = "Vite, écris ! 👣";
@@ -91,7 +116,7 @@
             }
         }
 
-        // 3. VÉRIFICATION FINALE
+        // 3. VÉRIFICATION FINALE + EFFET DE FOUIE
         function verifierEtOuvrir() {
             const nameInput = document.getElementById('guestName').value.trim();
             const urlToken = urlParams.get('token');
@@ -110,13 +135,23 @@
             localStorage.setItem('guest_name', nameInput);
             localStorage.setItem('device_locked', 'true');
 
+            // Animation explosive finale : on double le nombre de confettis !
+            creerConfettis(60);
+            
+            // Les confettis existants s'envolent
+            document.querySelectorAll('.party-confetti').forEach(c => {
+                c.style.transform = `translateY(-100px) scale(1.5) rotate(720deg)`;
+                c.style.opacity = '1';
+            });
+
             // Petite animation finale de transition avant de changer de page
-            document.querySelector('.login-container').style.transform = "scale(0)";
-            document.querySelector('.login-container').style.transition = "all 0.5s ease";
+            document.querySelector('.login-container').style.transform = "scale(0) rotate(10deg)";
+            document.querySelector('.login-container').style.opacity = "0";
+            document.querySelector('.login-container').style.transition = "all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045)";
             
             setTimeout(() => {
                 window.location.href = "invitation.html";
-            }, 500);
+            }, 600);
         }
     </script>
 </body>
