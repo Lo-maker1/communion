@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue à la Communion</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="animation-communion">
+            <div class="mannequin boy"><i class="fa-solid fa-child-dress" style="transform: scaleX(-1);"></i></div>
+            <div class="mannequin girl"><i class="fa-solid fa-child-dress"></i></div>
+        </div>
+
+        <h1>Célébration de la Communion</h1>
+        <p class="subtitle">Entrez le prénom magique inscrit sur votre message WhatsApp pour ouvrir l'invitation exclusive :</p>
+        
+        <div class="form-group">
+            <input type="text" id="guestName" placeholder="Votre Prénom (ex: Tata Marie)..." autocomplete="off">
+            <button onclick="verifierEtOuvrir()">Ouvrir l'Enveloppe <i class="fa-solid fa-envelope-open"></i></button>
+        </div>
+        <p id="error-msg" class="error"></p>
+    </div>
+
+    <script>
+        // L'astuce magique : On récupère le token secret dans l'URL envoyée par WhatsApp
+        // Exemple du lien WhatsApp : https://tonpseudo.github.io/invitation/?token=VIP2026
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenValide = "VIP2026"; // Le code secret global pour cet événement
+
+        // Sécurité anti-clandestin basique : si déjà activé sur un autre appareil
+        if (localStorage.getItem('invitation_bloquee') === 'true') {
+            document.body.innerHTML = "<div class='login-container'><h1>Accès Refusé</h1><p>Cette invitation est strictement personnelle et a déjà été validée sur un autre appareil.</p></div>";
+        }
+
+        function verifierEtOuvrir() {
+            const nameInput = document.getElementById('guestName').value.trim();
+            const urlToken = urlParams.get('token');
+            const errorMsg = document.getElementById('error-msg');
+
+            // Vérification du Token WhatsApp
+            if (urlToken !== tokenValide) {
+                errorMsg.innerText = "Désolé, ce lien n'est pas officiel ou a été transféré illégalement.";
+                return;
+            }
+
+            if (nameInput.length < 2) {
+                errorMsg.innerText = "Veuillez entrer un prénom valide.";
+                return;
+            }
+
+            // On verrouille l'appareil : On stocke le nom localement
+            localStorage.setItem('guest_name', nameInput);
+            localStorage.setItem('device_locked', 'true');
+
+            // Redirection vers la carte magique
+            window.location.href = "invitation.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Invitation Personnelle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+    <div class="card-container">
+        <h1 class="angel-title">Sainte Communion</h1>
+        
+        <h2 class="welcome-guest">Invitation d'Honneur pour : <span id="nomInvite"></span> ✨</h2>
+        
+        <p class="details">Nous avons l'immense joie de vous inviter à célébrer avec nous la communion de nos deux merveilleux enfants.</p>
+
+        <div class="countdown-container">
+            <h3>L'événement commence dans :</h3>
+            <div id="countdown">Chargement...</div>
+        </div>
+
+        <div class="map-section">
+            <h3>Lieu de la réception & Itinéraire :</h3>
+            <div id="map" style="height: 250px; border-radius: 15px;"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Sécurité anti-fraude : Si la personne force l'accès sans être passée par l'index
+        const nom = localStorage.getItem('guest_name');
+        if (!nom) {
+            // Si le mec essaie de tricher, on le bloque définitivement
+            localStorage.setItem('invitation_bloquee', 'true');
+            window.location.href = "index.html";
+        } else {
+            document.getElementById('nomInvite').innerText = nom;
+        }
+
+        // --- COMPTE À REBOURS ---
+        // Date de la communion (Mets la vraie date ici)
+        const dateEvenement = new Date("May 17, 2027 10:00:00").getTime();
+
+        setInterval(function() {
+            const maintenant = new Date().getTime();
+            const distance = dateEvenement - maintenant;
+
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById("countdown").innerHTML = `<span>${jours}j</span> : <span>${heures}h</span> : <span>${minutes}m</span>`;
+        }, 1000);
+
+        // --- LA CARTE ROUTIÈRE ---
+        // Exemple de coordonnées (Ici Cotonou, Bénin, change par tes coordonnées)
+        var map = L.map('map').setView([6.3654, 2.4183], 15); 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.marker([6.3654, 2.4183]).addTo(map)
+            .bindPopup('<b>Lieu de la Communion !</b><br>Soyez les bienvenus.')
+            .openPopup();
+    </script>
+</body>
+</html>
