@@ -12,53 +12,111 @@
 
     <div class="login-container">
         <div class="animation-communion">
-            <div class="mannequin boy"><i class="fa-solid fa-child-dress" style="transform: scaleX(-1);"></i></div>
-            <div class="mannequin girl"><i class="fa-solid fa-child-dress"></i></div>
+            <div class="mannequin-wrapper" id="boyWrapper" onclick="declencherAction('boy')">
+                <div class="mannequin boy" id="boyIcon"><i class="fa-solid fa-user-tie"></i></div>
+                <span class="bubble" id="boyBubble">Salut !</span>
+            </div>
+            
+            <div class="mannequin-wrapper" id="girlWrapper" onclick="declencherAction('girl')">
+                <div class="mannequin girl" id="girlIcon"><i class="fa-solid fa-child-dress"></i></div>
+                <span class="bubble" id="girlBubble">Coucou !</span>
+            </div>
         </div>
 
         <h1>Célébration de la Communion</h1>
-        <p class="subtitle">Entrez le prénom magique inscrit sur votre message WhatsApp pour ouvrir l'invitation exclusive :</p>
+        <p class="subtitle">Touchez les enfants pour les faire danser, puis entrez votre prénom pour ouvrir votre enveloppe exclusive :</p>
         
         <div class="form-group">
-            <input type="text" id="guestName" placeholder="Votre Prénom (ex: Tata Marie)..." autocomplete="off">
+            <input type="text" id="guestName" placeholder="Votre Prénom ici..." autocomplete="off" oninput="reactionSaisie()">
             <button onclick="verifierEtOuvrir()">Ouvrir l'Enveloppe <i class="fa-solid fa-envelope-open"></i></button>
         </div>
         <p id="error-msg" class="error"></p>
     </div>
 
     <script>
-        // L'astuce magique : On récupère le token secret dans l'URL envoyée par WhatsApp
-        // Exemple du lien WhatsApp : https://tonpseudo.github.io/invitation/?token=VIP2026
         const urlParams = new URLSearchParams(window.location.search);
-        const tokenValide = "VIP2026"; // Le code secret global pour cet événement
+        const tokenValide = "VIP2026"; 
 
-        // Sécurité anti-clandestin basique : si déjà activé sur un autre appareil
         if (localStorage.getItem('invitation_bloquee') === 'true') {
-            document.body.innerHTML = "<div class='login-container'><h1>Accès Refusé</h1><p>Cette invitation est strictement personnelle et a déjà été validée sur un autre appareil.</p></div>";
+            document.body.innerHTML = "<div class='login-container'><h1>Accès Refusé</h1><p>Cette invitation est strictement personnelle.</p></div>";
         }
 
+        // 1. INTERACTIVITÉ : Quand on clique sur un mannequin
+        function declencherAction(genre) {
+            const icon = document.getElementById(`${genre}Icon`);
+            const bubble = document.getElementById(`${genre}Bubble`);
+            
+            // On ajoute la classe d'animation spéciale (tourbillon/spin)
+            icon.classList.add('animation-clic');
+            
+            // Changement de texte de la bulle
+            if(genre === 'boy') {
+                bubble.innerText = "Bienvenue ! 🎉";
+                bubble.style.opacity = "1";
+            } else {
+                bubble.innerText = "Danse avec moi ! ✨";
+                bubble.style.opacity = "1";
+            }
+
+            // On retire la classe après l'animation pour pouvoir recommencer
+            setTimeout(() => {
+                icon.classList.remove('animation-clic');
+                bubble.style.opacity = "0";
+            }, 1500);
+        }
+
+        // 2. INTERACTIVITÉ : Quand l'invité commence à taper son nom
+        function reactionSaisie() {
+            const nameInput = document.getElementById('guestName').value;
+            const boyWrapper = document.getElementById('boyWrapper');
+            const girlWrapper = document.getElementById('girlWrapper');
+            const boyBubble = document.getElementById('boyBubble');
+            const girlBubble = document.getElementById('girlBubble');
+
+            if (nameInput.length > 0) {
+                // Les mannequins s'ambiancent et se rapprochent au fur et à mesure de la saisie !
+                boyWrapper.style.transform = `translateX(15px) scale(1.1)`;
+                girlWrapper.style.transform = `translateX(-15px) scale(1.1)`;
+                
+                boyBubble.innerText = "C'est toi ? 😍";
+                girlBubble.innerText = "Vite, écris ! 👣";
+                boyBubble.style.opacity = "1";
+                girlBubble.style.opacity = "1";
+            } else {
+                // Reset si le champ est vidé
+                boyWrapper.style.transform = `translateX(0) scale(1)`;
+                girlWrapper.style.transform = `translateX(0) scale(1)`;
+                boyBubble.style.opacity = "0";
+                girlBubble.style.opacity = "0";
+            }
+        }
+
+        // 3. VÉRIFICATION FINALE
         function verifierEtOuvrir() {
             const nameInput = document.getElementById('guestName').value.trim();
             const urlToken = urlParams.get('token');
             const errorMsg = document.getElementById('error-msg');
 
-            // Vérification du Token WhatsApp
             if (urlToken !== tokenValide) {
-                errorMsg.innerText = "Désolé, ce lien n'est pas officiel ou a été transféré illégalement.";
+                errorMsg.innerText = "Désolé, ce lien n'est pas officiel.";
                 return;
             }
 
             if (nameInput.length < 2) {
-                errorMsg.innerText = "Veuillez entrer un prénom valide.";
+                errorMsg.innerText = "Veuillez entrer votre prénom pour que les enfants vous ouvrent la porte.";
                 return;
             }
 
-            // On verrouille l'appareil : On stocke le nom localement
             localStorage.setItem('guest_name', nameInput);
             localStorage.setItem('device_locked', 'true');
 
-            // Redirection vers la carte magique
-            window.location.href = "invitation.html";
+            // Petite animation finale de transition avant de changer de page
+            document.querySelector('.login-container').style.transform = "scale(0)";
+            document.querySelector('.login-container').style.transition = "all 0.5s ease";
+            
+            setTimeout(() => {
+                window.location.href = "invitation.html";
+            }, 500);
         }
     </script>
 </body>
