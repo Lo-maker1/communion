@@ -5,17 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votre Invitation Personnelle</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
-    <div class="card-container">
+    <div class="stars-container" id="starsBg"></div>
+
+    <div class="card-container main-card">
+        <div class="corner-stars top-left">✨✨</div>
+        <div class="corner-stars top-right">✨✨</div>
+
+        <div class="sacred-image-container">
+            <img src="https://images.unsplash.com/photo-1544764200-d834fd210a23?q=80&w=600&auto=format&fit=crop" alt="Jésus le Christ" class="sacred-img">
+            <div class="gold-halo"></div>
+        </div>
+
         <h1 class="angel-title">Sainte Communion</h1>
         
-        <h2 class="welcome-guest">Invitation d'Honneur pour : <span id="nomInvite"></span> ✨</h2>
+        <h2 class="welcome-guest">Invitation d'Honneur pour : <br><span id="nomInvite" class="guest-highlight"></span> ✨</h2>
         
-        <p class="details">Steven et Hillary HOUNTONDJI, on l'honneur de vous inviter a une somptueuse reception dans le cadre de leur premiere communion</p>
+        <div class="communion-symbol-box">
+            <img src="https://images.unsplash.com/photo-1543085697-3932204c63bf?q=80&w=400&auto=format&fit=crop" alt="Sainte Communion" class="symbol-img">
+            <div class="sparkles-overlay">✨ Célébration Unique ✨</div>
+        </div>
+
+        <p class="details">Steven et Hillary HOUNTONDJI ont l'honneur de vous inviter à une somptueuse réception dans le cadre de leur première communion.</p>
 
         <div class="countdown-container">
             <h3>L'événement commence dans :</h3>
@@ -24,8 +39,11 @@
 
         <div class="map-section">
             <h3>Lieu de la réception & Itinéraire :</h3>
-            <div id="map" style="height: 250px; border-radius: 15px;"></div>
+            <div id="map" style="height: 250px; border-radius: 15px; border: 2px solid #fef08a;"></div>
         </div>
+
+        <div class="corner-stars bottom-left">✨✨</div>
+        <div class="corner-stars bottom-right">✨✨</div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -33,15 +51,28 @@
         // Sécurité anti-fraude : Si la personne force l'accès sans être passée par l'index
         const nom = localStorage.getItem('guest_name');
         if (!nom) {
-            // Si le mec essaie de tricher, on le bloque définitivement
             localStorage.setItem('invitation_bloquee', 'true');
             window.location.href = "index.html";
         } else {
             document.getElementById('nomInvite').innerText = nom;
         }
 
+        // --- GÉNÉRATEUR D'ÉTOILES SCINTILLANTES DANS LE DÉCOR ---
+        function allumerLesEtoiles() {
+            const conteneur = document.getElementById('starsBg');
+            for (let i = 0; i < 45; i++) {
+                const etoile = document.createElement('div');
+                etoile.className = 'star-twinkle';
+                etoile.style.top = Math.random() * 100 + 'vh';
+                etoile.style.left = Math.random() * 100 + 'vw';
+                etoile.style.animationDelay = Math.random() * 3 + 's';
+                etoile.style.transform = `scale(${Math.random() * 1.5})`;
+                conteneur.appendChild(etoile);
+            }
+        }
+        allumerLesEtoiles();
+
         // --- COMPTE À REBOURS ---
-        // Date de la communion (Mets la vraie date ici)
         const dateEvenement = new Date("May 17, 2027 10:00:00").getTime();
 
         setInterval(function() {
@@ -52,11 +83,14 @@
             const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             
-            document.getElementById("countdown").innerHTML = `<span>${jours}j</span> : <span>${heures}h</span> : <span>${minutes}m</span>`;
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "C'est le grand jour ! 🎉";
+            } else {
+                document.getElementById("countdown").innerHTML = `<span>${jours}j</span> : <span>${heures}h</span> : <span>${minutes}m</span>`;
+            }
         }, 1000);
 
-        // --- LA CARTE ROUTIÈRE ---
-        // Exemple de coordonnées (Ici Cotonou, Bénin, change par tes coordonnées)
+        // --- LA CARTE ROUTIÈRE (Leaflet) ---
         var map = L.map('map').setView([6.3654, 2.4183], 15); 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.marker([6.3654, 2.4183]).addTo(map)
