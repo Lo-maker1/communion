@@ -222,6 +222,7 @@ button:hover {
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 5px;
+    margin-top: 15px;
 }
 
 .countdown-container #countdown {
@@ -234,4 +235,137 @@ button:hover {
     display: inline-block;
     box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
     letter-spacing: 1px;
+}
+
+/* ==========================================================
+   AJOUTS : STYLE EXCLUSIF POUR LA CARTE D'INVITATION SACRÉE
+   ========================================================== */
+
+/* Arrière-plan étoilé flottant */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star-twinkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #eab308;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fde047, 0 0 20px #fde047;
+    animation: pulseStar 2s infinite ease-in-out;
+}
+
+@keyframes pulseStar {
+    0%, 100% { opacity: 0.2; transform: scale(0.6); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Style de la carte d'invitation principale */
+.main-card {
+    z-index: 10;
+    border: 3px solid #fef08a !important; /* Bordure dorée lumineuse */
+    background: linear-gradient(to bottom, #ffffff, #fffbeb) !important;
+}
+
+/* Étoiles décoratives fixes aux angles de la carte */
+.corner-stars {
+    position: absolute;
+    font-size: 20px;
+    color: #eab308;
+    text-shadow: 0 0 8px rgba(234, 179, 8, 0.5);
+    animation: floatStars 3s infinite ease-in-out;
+}
+.top-left { top: 15px; left: 15px; }
+.top-right { top: 15px; right: 15px; }
+.bottom-left { bottom: 15px; left: 15px; }
+.bottom-right { bottom: 15px; right: 15px; }
+
+@keyframes floatStars {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Conteneur Image de Jésus-Christ */
+.sacred-image-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 15px auto;
+}
+
+.sacred-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #eab308;
+    box-shadow: 0 8px 20px rgba(180, 83, 9, 0.2);
+}
+
+/* Halo doré spirituel derrière Jésus */
+.gold-halo {
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border-radius: 50%;
+    box-shadow: 0 0 25px #fde047;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+/* Boîte du Symbole de la Communion */
+.communion-symbol-box {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    height: 110px;
+    margin: 15px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px dashed #fef08a;
+}
+
+.symbol-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sparkles-overlay {
+    position: absolute;
+    bottom: 5px;
+    left: 0; right: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.guest-highlight {
+    color: #b45309;
+    font-weight: 800;
+}
+
+.details {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 15px 0;
+}
+
+/* Section de la carte Leaflet */
+.map-section {
+    margin-top: 20px;
+}
+
+.map-section h3 {
+    font-size: 16px;
+    color: #1e3a8a;
+    margin-bottom: 10px;
 }
