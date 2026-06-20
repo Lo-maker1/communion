@@ -13,12 +13,16 @@
     <div class="login-container">
         <div class="animation-communion">
             <div class="mannequin-wrapper" id="boyWrapper" onclick="declencherAction('boy')">
-                <div class="mannequin boy" id="boyIcon"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="mannequin boy" id="boyIcon">
+                    <i class="fa-solid fa-child"></i>
+                </div>
                 <span class="bubble" id="boyBubble">Salut !</span>
             </div>
             
             <div class="mannequin-wrapper" id="girlWrapper" onclick="declencherAction('girl')">
-                <div class="mannequin girl" id="girlIcon"><i class="fa-solid fa-child-dress"></i></div>
+                <div class="mannequin girl" id="girlIcon">
+                    <i class="fa-solid fa-child-dress"></i>
+                </div>
                 <span class="bubble" id="girlBubble">Coucou !</span>
             </div>
         </div>
@@ -116,7 +120,7 @@
             }
         }
 
-        // 3. VÉRIFICATION FINALE + EFFET DE FOUIE
+        // 3. VÉRIFICATION FINALE + EFFET DE FOLIE
         function verifierEtOuvrir() {
             const nameInput = document.getElementById('guestName').value.trim();
             const urlToken = urlParams.get('token');
