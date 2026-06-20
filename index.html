@@ -6,23 +6,18 @@
     <title>Bienvenue à la Communion</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <div class="login-container">
         <div class="animation-communion">
             <div class="mannequin-wrapper" id="boyWrapper" onclick="declencherAction('boy')">
-                <div class="mannequin boy" id="boyIcon">
-                    <i class="fa-solid fa-child"></i>
-                </div>
+                <div class="mannequin boy" id="boyIcon" style="font-size: 80px;">👦</div>
                 <span class="bubble" id="boyBubble">Salut !</span>
             </div>
             
             <div class="mannequin-wrapper" id="girlWrapper" onclick="declencherAction('girl')">
-                <div class="mannequin girl" id="girlIcon">
-                    <i class="fa-solid fa-child-dress"></i>
-                </div>
+                <div class="mannequin girl" id="girlIcon" style="font-size: 80px;">👧</div>
                 <span class="bubble" id="girlBubble">Coucou !</span>
             </div>
         </div>
@@ -32,7 +27,7 @@
         
         <div class="form-group">
             <input type="text" id="guestName" placeholder="Votre Prénom ici..." autocomplete="off" oninput="reactionSaisie()">
-            <button onclick="verifierEtOuvrir()">Ouvrir l'Enveloppe <i class="fa-solid fa-envelope-open"></i></button>
+            <button onclick="verifierEtOuvrir()">Ouvrir l'Enveloppe ✉️</button>
         </div>
         <p id="error-msg" class="error"></p>
     </div>
@@ -67,7 +62,6 @@
             }
         }
         
-        // Lance la pluie festive discrète dès le début
         creerConfettis(45);
 
         // 1. INTERACTIVITÉ : Quand on clique sur un mannequin
@@ -75,10 +69,8 @@
             const icon = document.getElementById(`${genre}Icon`);
             const bubble = document.getElementById(`${genre}Bubble`);
             
-            // Ajoute la super animation festive (breakdance / spin) défini dans le CSS survolté
             icon.classList.add('animation-clic');
             
-            // Changement de texte de la bulle
             if(genre === 'boy') {
                 bubble.innerText = "Bienvenue ! 🎉";
                 bubble.style.opacity = "1";
@@ -87,7 +79,6 @@
                 bubble.style.opacity = "1";
             }
 
-            // On retire la classe après l'animation pour pouvoir recommencer
             setTimeout(() => {
                 icon.classList.remove('animation-clic');
                 bubble.style.opacity = "0";
@@ -103,7 +94,6 @@
             const girlBubble = document.getElementById('girlBubble');
 
             if (nameInput.length > 0) {
-                // Les mannequins s'ambiancent en s'approchant au fur et à mesure de la saisie !
                 boyWrapper.style.transform = `translateX(20px) scale(1.15)`;
                 girlWrapper.style.transform = `translateX(-20px) scale(1.15)`;
                 
@@ -112,7 +102,6 @@
                 boyBubble.style.opacity = "1";
                 girlBubble.style.opacity = "1";
             } else {
-                // Reset si le champ est vidé
                 boyWrapper.style.transform = `translateX(0) scale(1)`;
                 girlWrapper.style.transform = `translateX(0) scale(1)`;
                 boyBubble.style.opacity = "0";
@@ -139,16 +128,13 @@
             localStorage.setItem('guest_name', nameInput);
             localStorage.setItem('device_locked', 'true');
 
-            // Animation explosive finale : on double le nombre de confettis !
             creerConfettis(60);
             
-            // Les confettis existants s'envolent
             document.querySelectorAll('.party-confetti').forEach(c => {
                 c.style.transform = `translateY(-100px) scale(1.5) rotate(720deg)`;
                 c.style.opacity = '1';
             });
 
-            // Petite animation finale de transition avant de changer de page
             document.querySelector('.login-container').style.transform = "scale(0) rotate(10deg)";
             document.querySelector('.login-container').style.opacity = "0";
             document.querySelector('.login-container').style.transition = "all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045)";
