@@ -12,26 +12,30 @@
 
     <div class="stars-container" id="starsBg"></div>
 
-    <div class="card-container main-card">
-        <div class="corner-stars top-left">✨✨</div>
-        <div class="corner-stars top-right">✨✨</div>
+    <div class="card-container main-card" style="position: relative; overflow: hidden;">
+        
+        <!-- DECORATION DE FLEURS CLAIRES DANS LES COINS (Comme sur le modèle) -->
+        <img src="fleurs.png" alt="Fleurs" style="position: absolute; top: -10px; left: -10px; width: 90px; height: auto; z-index: 5;">
+        <img src="fleurs.png" alt="Fleurs" style="position: absolute; top: -10px; right: -10px; width: 90px; height: auto; transform: scaleX(-1); z-index: 5;">
 
         <div class="sacred-image-container">
             <img src="jesus.jpg" alt="Seigneur Jésus-Christ" class="sacred-img animated-jesus">
             <div class="gold-halo dynamic-halo"></div>
         </div>
 
-        <h1 class="angel-title" style="display: flex; justify-content: center; align-items: center; gap: 12px;">
-            <span style="font-size: 40px; filter: drop-shadow(0 0 8px #fde047); animation: floatStars 3s infinite ease-in-out;">👼✨</span>
+        <!-- TITRE AVEC LES VRAIS ANGES DE L'IMAGE_A3AAE1.PNG EN EFFET MIROIR -->
+        <h1 class="angel-title" style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
+            <img src="ange.png" alt="Ange" style="width: 60px; height: auto; filter: drop-shadow(0 0 8px #fde047); animation: floatStars 3s infinite ease-in-out;">
             Sainte Communion
-            <span style="font-size: 40px; filter: drop-shadow(0 0 8px #fde047); animation: floatStars 3s infinite ease-in-out; animation-delay: 1.5s;">✨👼</span>
+            <img src="ange.png" alt="Ange" style="width: 60px; height: auto; transform: scaleX(-1); filter: drop-shadow(0 0 8px #fde047); animation: floatStars 3s infinite ease-in-out; animation-delay: 1.5s;">
         </h1>
         
         <h2 class="welcome-guest">Invitation d'Honneur pour : <br><span id="nomInvite" class="guest-highlight"></span> ✨</h2>
         
-        <div class="communion-symbol-box" style="display: flex; justify-content: center; align-items: center; background: #fffbeb;">
-            <span style="font-size: 55px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));">🍷🍞</span>
-            <div class="sparkles-overlay">✨ Célébration Unique ✨</div>
+        <!-- BOITE AVEC LE VERITABLE CALICE DORE ET ASSORTIMENT (Pain, vin et raisin) -->
+        <div class="communion-symbol-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fffdf5; border: 2px double #fef08a; padding: 15px; border-radius: 20px; margin: 20px auto; max-width: 280px;">
+            <img src="calice.png" alt="Calice Sacré" style="width: 130px; height: auto; filter: drop-shadow(0 4px 10px rgba(234, 179, 8, 0.4)); margin-bottom: 8px;">
+            <div class="sparkles-overlay" style="color: #b45309; font-weight: 700; font-size: 14px;">✨ Célébration Unique ✨</div>
         </div>
 
         <p class="details">Steven et Hillary HOUNTONDJI ont l'honneur de vous inviter à une somptueuse réception dans le cadre de leur première communion.</p>
