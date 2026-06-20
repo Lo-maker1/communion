@@ -298,6 +298,7 @@ button:hover {
     width: 130px;
     height: 130px;
     margin: 0 auto 15px auto;
+    border-radius: 50%;
 }
 
 .sacred-img {
@@ -309,17 +310,35 @@ button:hover {
     box-shadow: 0 8px 20px rgba(180, 83, 9, 0.2);
 }
 
+/* AJOUT : ANIMATION DE RESPIRATION CÉLESTE POUR L'IMAGE DE JÉSUS */
+.animated-jesus {
+    animation: breathingJesus 4s infinite ease-in-out;
+}
+
+@keyframes breathingJesus {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 10px 25px rgba(234, 179, 8, 0.4); }
+}
+
 /* Halo doré spirituel derrière Jésus */
 .gold-halo {
     position: absolute;
     top: -5px; left: -5px; right: -5px; bottom: -5px;
     border-radius: 50%;
-    box-shadow: 0 0 25px #fde047;
     z-index: -1;
-    opacity: 0.7;
 }
 
-/* Boîte du Symbole de la Communion */
+/* AJOUT : ANIMATION SCINTILLANTE DU HALO DORÉ */
+.dynamic-halo {
+    animation: goldGlow 4s infinite ease-in-out;
+}
+
+@keyframes goldGlow {
+    0%, 100% { box-shadow: 0 0 20px #fde047; opacity: 0.6; }
+    50% { box-shadow: 0 0 40px #fde047, 0 0 60px #fdba74; opacity: 0.9; }
+}
+
+/* Boîte du Symbole de la Communion (Adaptée pour les émojis) */
 .communion-symbol-box {
     position: relative;
     width: 100%;
@@ -341,10 +360,10 @@ button:hover {
     position: absolute;
     bottom: 5px;
     left: 0; right: 0;
-    color: #ffffff;
+    color: #b45309;
     font-size: 16px;
     font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .guest-highlight {
